@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import "./App.css";
+import Asset from "./Asset";
+import useConnectWallet from "./hooks/useConnect";
+import Log from "./Log";
+import SendTrx from "./Send";
+import { ACCOUNT_STATE } from "./state/account";
 
 function App() {
+  useConnectWallet();
+
+  const accountState = useRecoilValue(ACCOUNT_STATE);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {accountState.isLogged ? (
+        <>
+          <Asset />
+          <SendTrx />
+        </>
+      ) : (
+        <>
+          <h2>You are not Installed or Login Wellink </h2>
+        </>
+      )}
+
+      <Log />
     </div>
   );
 }
