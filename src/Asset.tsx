@@ -18,6 +18,7 @@ function Asset() {
         .catch(console.log);
     }
   }, [wallet.address]);
+
   return (
     <>
       <div>
